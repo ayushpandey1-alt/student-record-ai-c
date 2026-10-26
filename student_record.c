@@ -20,6 +20,26 @@ struct Student {
 struct Student students[MAX];
 int totalStudents = 0;
 
+// Function to calculate CGPA for a student (average of valid SGPAs)
+void calculateStudentCGPA(int index) {
+    float sum = 0.0;
+    int count = 0;
+    int i;
+
+    for (i = 0; i < students[index].semester; i++) {
+        if (students[index].sgpa[i] > 0.0) {
+            sum = sum + students[index].sgpa[i];
+            count++;
+        }
+    }
+
+    if (count > 0) {
+        students[index].cgpa = sum / count;
+    } else {
+        students[index].cgpa = 0.0;
+    }
+}
+
 // Function to print details of a single student
 void printStudentDetails(int i) {
     int j;
@@ -58,7 +78,7 @@ void loadInitialStudents() {
     students[0].semester = 1;
     students[0].sgpa[0] = 9.4;
     for (i = 1; i < 8; i++) students[0].sgpa[i] = 0.0;
-    students[0].cgpa = 9.4;
+    calculateStudentCGPA(0);
 
     // Student 2 (Year 2, Sem 3)
     students[1].sap_id = 500115202LL;
@@ -72,7 +92,7 @@ void loadInitialStudents() {
     students[1].sgpa[1] = 8.4;
     students[1].sgpa[2] = 8.2;
     for (i = 3; i < 8; i++) students[1].sgpa[i] = 0.0;
-    students[1].cgpa = 8.23;
+    calculateStudentCGPA(1);
 
     // Student 3 (Year 3, Sem 5)
     students[2].sap_id = 500108303LL;
@@ -88,7 +108,7 @@ void loadInitialStudents() {
     students[2].sgpa[3] = 6.1;
     students[2].sgpa[4] = 6.4;
     for (i = 5; i < 8; i++) students[2].sgpa[i] = 0.0;
-    students[2].cgpa = 6.40;
+    calculateStudentCGPA(2);
 
     // Student 4 (Year 4, Sem 7)
     students[3].sap_id = 500095404LL;
@@ -106,7 +126,7 @@ void loadInitialStudents() {
     students[3].sgpa[5] = 4.7;
     students[3].sgpa[6] = 5.0;
     students[3].sgpa[7] = 0.0;
-    students[3].cgpa = 4.90;
+    calculateStudentCGPA(3);
 
     // Student 5 (Year 2, Sem 4)
     students[4].sap_id = 500119505LL;
@@ -121,7 +141,7 @@ void loadInitialStudents() {
     students[4].sgpa[2] = 8.7;
     students[4].sgpa[3] = 9.1;
     for (i = 4; i < 8; i++) students[4].sgpa[i] = 0.0;
-    students[4].cgpa = 8.90;
+    calculateStudentCGPA(4);
 
     totalStudents = 5;
 }
@@ -166,7 +186,7 @@ void addStudent() {
         }
     }
 
-    students[totalStudents].cgpa = 0.0;
+    calculateStudentCGPA(totalStudents);
     totalStudents++;
 
     printf("\nStudent record added successfully!\n");
@@ -217,6 +237,45 @@ void searchStudent() {
     }
 }
 
+// (c) Function to calculate and show CGPA of each student
+void displayAllCGPA() {
+    int i;
+    printf("\n--- CGPA OF ALL STUDENTS ---\n");
+    printf("%-12s %-20s %-6s %-6s\n", "SAP ID", "Name", "Sem", "CGPA");
+    printf("------------------------------------------------------------\n");
+    for (i = 0; i < totalStudents; i++) {
+        calculateStudentCGPA(i);
+        printf("%-12lld %-20s %-6d %-6.2f\n", 
+               students[i].sap_id, students[i].name, students[i].semester, students[i].cgpa);
+    }
+}
+
+// (d) Function to calculate average CGPA of each year
+void averageCGPAYearWise() {
+    int yr, i;
+    float sum[5] = {0.0, 0.0, 0.0, 0.0, 0.0};
+    int count[5] = {0, 0, 0, 0, 0};
+
+    // Make sure all CGPAs are updated
+    for (i = 0; i < totalStudents; i++) {
+        calculateStudentCGPA(i);
+        yr = students[i].year;
+        if (yr >= 1 && yr <= 4) {
+            sum[yr] = sum[yr] + students[i].cgpa;
+            count[yr] = count[yr] + 1;
+        }
+    }
+
+    printf("\n--- AVERAGE CGPA OF EACH YEAR ---\n");
+    for (yr = 1; yr <= 4; yr++) {
+        if (count[yr] > 0) {
+            printf("Year %d: Average CGPA = %.2f (Total Students: %d)\n", yr, sum[yr] / count[yr], count[yr]);
+        } else {
+            printf("Year %d: No students registered\n", yr);
+        }
+    }
+}
+
 // (e) Function to display all students of the University
 void displayAllStudents() {
     int i;
@@ -261,6 +320,64 @@ void deleteStudent() {
     printf("Student record deleted successfully!\n");
 }
 
+// (g) Function to display records in increasing order of SAP ID
+void sortBySAPID() {
+    struct Student temp[MAX];
+    struct Student swap;
+    int i, j;
+
+    for (i = 0; i < totalStudents; i++) {
+        temp[i] = students[i];
+    }
+
+    // Simple Bubble Sort
+    for (i = 0; i < totalStudents - 1; i++) {
+        for (j = 0; j < totalStudents - i - 1; j++) {
+            if (temp[j].sap_id > temp[j + 1].sap_id) {
+                swap = temp[j];
+                temp[j] = temp[j + 1];
+                temp[j + 1] = swap;
+            }
+        }
+    }
+
+    printf("\n--- STUDENTS IN INCREASING ORDER OF SAP ID ---\n");
+    printf("%-12s %-20s %-6s %-6s\n", "SAP ID", "Name", "Year", "CGPA");
+    printf("------------------------------------------------------------\n");
+    for (i = 0; i < totalStudents; i++) {
+        printf("%-12lld %-20s %-6d %-6.2f\n", temp[i].sap_id, temp[i].name, temp[i].year, temp[i].cgpa);
+    }
+}
+
+// (h) Function to display records in increasing order of Name
+void sortByName() {
+    struct Student temp[MAX];
+    struct Student swap;
+    int i, j;
+
+    for (i = 0; i < totalStudents; i++) {
+        temp[i] = students[i];
+    }
+
+    // Simple Bubble Sort using strcmp
+    for (i = 0; i < totalStudents - 1; i++) {
+        for (j = 0; j < totalStudents - i - 1; j++) {
+            if (strcmp(temp[j].name, temp[j + 1].name) > 0) {
+                swap = temp[j];
+                temp[j] = temp[j + 1];
+                temp[j + 1] = swap;
+            }
+        }
+    }
+
+    printf("\n--- STUDENTS IN INCREASING ORDER OF NAME ---\n");
+    printf("%-20s %-12s %-6s %-6s\n", "Name", "SAP ID", "Year", "CGPA");
+    printf("------------------------------------------------------------\n");
+    for (i = 0; i < totalStudents; i++) {
+        printf("%-20s %-12lld %-6d %-6.2f\n", temp[i].name, temp[i].sap_id, temp[i].year, temp[i].cgpa);
+    }
+}
+
 int main() {
     int choice;
     loadInitialStudents();
@@ -290,11 +407,23 @@ int main() {
             case 2:
                 searchStudent();
                 break;
+            case 3:
+                displayAllCGPA();
+                break;
+            case 4:
+                averageCGPAYearWise();
+                break;
             case 5:
                 displayAllStudents();
                 break;
             case 6:
                 deleteStudent();
+                break;
+            case 7:
+                sortBySAPID();
+                break;
+            case 8:
+                sortByName();
                 break;
             case 10:
                 printf("\nExiting program. Thank you!\n");
