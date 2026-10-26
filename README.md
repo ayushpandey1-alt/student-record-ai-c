@@ -9,6 +9,10 @@
 ## 📌 Project Overview
 This project is a console-based, menu-driven **Student Record and Result Management System** developed in C. It allows managing student profiles, computing semester and cumulative grade point averages (CGPA), analyzing year-wise academic averages, sorting records, and providing rule-based AI academic advisory feedback based on student CGPA.
 
+Two implementations are provided:
+1. **`student_record.c` (Simple Version):** Uses static arrays and only standard `<stdio.h>` and `<string.h>` (without `<stdlib.h>` or dynamic memory complexity).
+2. **`student_record_dynamic.c` (Dynamic Memory Version):** Demonstrates heap memory management using `calloc()`, `malloc()`, and `free()` from `<stdlib.h>`.
+
 ---
 
 ## 🚀 Key Features
@@ -35,36 +39,32 @@ A rule-based advisory function that evaluates student CGPA and provides automate
 ## 📁 Repository Structure
 ```text
 student-record-ai-c/
-├── student_record.c        # Main C source file (rename to your SAP_ID.c for submission)
-├── README.md               # Complete project documentation
-├── AI_USAGE_LOG.md         # Log documenting prompts and assistance from AI
+├── student_record.c            # Simple C source file (static arrays, no stdlib.h)
+├── student_record_dynamic.c    # Dynamic memory C source file (malloc, calloc, free from stdlib.h)
+├── README.md                   # Complete project documentation
+├── AI_USAGE_LOG.md             # Log documenting prompts and assistance from AI
 ├── .vscode/
-│   └── tasks.json          # VS Code build task configuration for GCC
+│   └── tasks.json              # VS Code build task configuration for GCC
 └── tests/
-    ├── sample_input.txt    # Automated test input commands
-    └── sample_output.txt   # Corresponding system execution output
+    ├── sample_input.txt        # Automated test input commands
+    └── sample_output.txt       # Corresponding system execution output
 ```
 
 ---
 
 ## 🛠️ How to Run in VS Code
 
-### Method 1: Using the Integrated Terminal
-1. Open the project folder in **VS Code**:
-   `File` -> `Open Folder...` -> Select this directory.
-2. Open the terminal (`Ctrl + ~` or `Terminal` -> `New Terminal`).
-3. Compile the C program using GCC:
-   ```powershell
-   gcc student_record.c -o student_record.exe
-   ```
-4. Run the executable:
-   ```powershell
-   .\student_record.exe
-   ```
+### 1. Running the Simple Version (`student_record.c`)
+```powershell
+gcc student_record.c -o student_record.exe
+.\student_record.exe
+```
 
-### Method 2: Using VS Code Build Task
-1. Press `Ctrl + Shift + B` (Default Build Task) to automatically compile `student_record.c`.
-2. In the terminal, type `.\student_record.exe` and press Enter.
+### 2. Running the Dynamic Memory Version (`student_record_dynamic.c`)
+```powershell
+gcc student_record_dynamic.c -o student_record_dynamic.exe
+.\student_record_dynamic.exe
+```
 
 ---
 
