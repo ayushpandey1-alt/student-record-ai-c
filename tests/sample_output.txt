@@ -1,0 +1,260 @@
+
+============================================================
+    STUDENT RECORD & RESULT MANAGEMENT SYSTEM
+============================================================
+1. Add Student Record
+2. Search Student Record
+3. Calculate CGPA of Each Student
+4. Calculate Average CGPA of Each Year
+5. Display All Students
+6. Delete Student Record
+7. Display Students Sorted by SAP ID
+8. Display Students Sorted by Name
+9. AI-Assisted Academic Advisor
+10. Exit
+============================================================
+Enter your choice (1-10): 
+--- CGPA OF ALL STUDENTS ---
+SAP ID       Name                 Sem    CGPA  
+------------------------------------------------------------
+500120101    Aarav Sharma         1      9.40  
+500115202    Diya Patel           3      8.23  
+500108303    Rohan Verma          5      6.40  
+500095404    Vikram Singh         7      4.90  
+500119505    Ananya Gupta         4      8.90  
+
+============================================================
+    STUDENT RECORD & RESULT MANAGEMENT SYSTEM
+============================================================
+1. Add Student Record
+2. Search Student Record
+3. Calculate CGPA of Each Student
+4. Calculate Average CGPA of Each Year
+5. Display All Students
+6. Delete Student Record
+7. Display Students Sorted by SAP ID
+8. Display Students Sorted by Name
+9. AI-Assisted Academic Advisor
+10. Exit
+============================================================
+Enter your choice (1-10): 
+--- AVERAGE CGPA OF EACH YEAR ---
+Year 1: Average CGPA = 9.40 (Total Students: 1)
+Year 2: Average CGPA = 8.57 (Total Students: 2)
+Year 3: Average CGPA = 6.40 (Total Students: 1)
+Year 4: Average CGPA = 4.90 (Total Students: 1)
+
+============================================================
+    STUDENT RECORD & RESULT MANAGEMENT SYSTEM
+============================================================
+1. Add Student Record
+2. Search Student Record
+3. Calculate CGPA of Each Student
+4. Calculate Average CGPA of Each Year
+5. Display All Students
+6. Delete Student Record
+7. Display Students Sorted by SAP ID
+8. Display Students Sorted by Name
+9. AI-Assisted Academic Advisor
+10. Exit
+============================================================
+Enter your choice (1-10): 
+--- STUDENTS IN INCREASING ORDER OF SAP ID ---
+SAP ID       Name                 Year   CGPA  
+------------------------------------------------------------
+500095404    Vikram Singh         4      4.90  
+500108303    Rohan Verma          3      6.40  
+500115202    Diya Patel           2      8.23  
+500119505    Ananya Gupta         2      8.90  
+500120101    Aarav Sharma         1      9.40  
+
+============================================================
+    STUDENT RECORD & RESULT MANAGEMENT SYSTEM
+============================================================
+1. Add Student Record
+2. Search Student Record
+3. Calculate CGPA of Each Student
+4. Calculate Average CGPA of Each Year
+5. Display All Students
+6. Delete Student Record
+7. Display Students Sorted by SAP ID
+8. Display Students Sorted by Name
+9. AI-Assisted Academic Advisor
+10. Exit
+============================================================
+Enter your choice (1-10): 
+--- STUDENTS IN INCREASING ORDER OF NAME ---
+Name                 SAP ID       Year   CGPA  
+------------------------------------------------------------
+Aarav Sharma         500120101    1      9.40  
+Ananya Gupta         500119505    2      8.90  
+Diya Patel           500115202    2      8.23  
+Rohan Verma          500108303    3      6.40  
+Vikram Singh         500095404    4      4.90  
+
+============================================================
+    STUDENT RECORD & RESULT MANAGEMENT SYSTEM
+============================================================
+1. Add Student Record
+2. Search Student Record
+3. Calculate CGPA of Each Student
+4. Calculate Average CGPA of Each Year
+5. Display All Students
+6. Delete Student Record
+7. Display Students Sorted by SAP ID
+8. Display Students Sorted by Name
+9. AI-Assisted Academic Advisor
+10. Exit
+============================================================
+Enter your choice (1-10): 
+--- AI-ASSISTED ACADEMIC ADVISOR ---
+Enter SAP ID of student: 
+Student: Aarav Sharma | SAP ID: 500120101 | CGPA: 9.40
+Category: Excellent Performance
+Advice  : Outstanding result! Maintain your current study pattern and explore research or internships.
+
+============================================================
+    STUDENT RECORD & RESULT MANAGEMENT SYSTEM
+============================================================
+1. Add Student Record
+2. Search Student Record
+3. Calculate CGPA of Each Student
+4. Calculate Average CGPA of Each Year
+5. Display All Students
+6. Delete Student Record
+7. Display Students Sorted by SAP ID
+8. Display Students Sorted by Name
+9. AI-Assisted Academic Advisor
+10. Exit
+============================================================
+Enter your choice (1-10): 
+--- AI-ASSISTED ACADEMIC ADVISOR ---
+Enter SAP ID of student: 
+Student: Diya Patel | SAP ID: 500115202 | CGPA: 8.23
+Category: Good Performance
+Advice  : Good work! Stay consistent and focus on higher grades in core subjects to achieve 9+ CGPA.
+
+============================================================
+    STUDENT RECORD & RESULT MANAGEMENT SYSTEM
+============================================================
+1. Add Student Record
+2. Search Student Record
+3. Calculate CGPA of Each Student
+4. Calculate Average CGPA of Each Year
+5. Display All Students
+6. Delete Student Record
+7. Display Students Sorted by SAP ID
+8. Display Students Sorted by Name
+9. AI-Assisted Academic Advisor
+10. Exit
+============================================================
+Enter your choice (1-10): 
+--- AI-ASSISTED ACADEMIC ADVISOR ---
+Enter SAP ID of student: 
+Student: Rohan Verma | SAP ID: 500108303 | CGPA: 6.40
+Category: Needs Improvement
+Advice  : Needs improvement - focus more on subjects with lower SGPA and attend doubt sessions.
+
+============================================================
+    STUDENT RECORD & RESULT MANAGEMENT SYSTEM
+============================================================
+1. Add Student Record
+2. Search Student Record
+3. Calculate CGPA of Each Student
+4. Calculate Average CGPA of Each Year
+5. Display All Students
+6. Delete Student Record
+7. Display Students Sorted by SAP ID
+8. Display Students Sorted by Name
+9. AI-Assisted Academic Advisor
+10. Exit
+============================================================
+Enter your choice (1-10): 
+--- AI-ASSISTED ACADEMIC ADVISOR ---
+Enter SAP ID of student: 
+Student: Vikram Singh | SAP ID: 500095404 | CGPA: 4.90
+Category: Requires Immediate Attention
+Advice  : Requires immediate attention - consult your faculty mentor and join remedial classes.
+
+============================================================
+    STUDENT RECORD & RESULT MANAGEMENT SYSTEM
+============================================================
+1. Add Student Record
+2. Search Student Record
+3. Calculate CGPA of Each Student
+4. Calculate Average CGPA of Each Year
+5. Display All Students
+6. Delete Student Record
+7. Display Students Sorted by SAP ID
+8. Display Students Sorted by Name
+9. AI-Assisted Academic Advisor
+10. Exit
+============================================================
+Enter your choice (1-10): 
+--- SEARCH STUDENT ---
+1. Search by SAP ID
+2. Search by Name
+Enter your choice: Enter SAP ID: 
+------------------------------------------------------------
+SAP ID       : 500119505
+Roll Number  : R214222120
+Name         : Ananya Gupta
+Phone Number : 9988776655
+Email ID     : ananya@upes.ac.in
+Year         : 2
+Semester     : 4
+SGPA in all 8 Semesters:
+  Sem 1: 8.80  Sem 2: 9.00  Sem 3: 8.70  Sem 4: 9.10
+  Sem 5: -  Sem 6: -  Sem 7: -  Sem 8: -
+Calculated CGPA: 8.90
+------------------------------------------------------------
+
+============================================================
+    STUDENT RECORD & RESULT MANAGEMENT SYSTEM
+============================================================
+1. Add Student Record
+2. Search Student Record
+3. Calculate CGPA of Each Student
+4. Calculate Average CGPA of Each Year
+5. Display All Students
+6. Delete Student Record
+7. Display Students Sorted by SAP ID
+8. Display Students Sorted by Name
+9. AI-Assisted Academic Advisor
+10. Exit
+============================================================
+Enter your choice (1-10): 
+--- SEARCH STUDENT ---
+1. Search by SAP ID
+2. Search by Name
+Enter your choice: Enter Name to search: 
+------------------------------------------------------------
+SAP ID       : 500120101
+Roll Number  : R214223001
+Name         : Aarav Sharma
+Phone Number : 9876543210
+Email ID     : aarav@upes.ac.in
+Year         : 1
+Semester     : 1
+SGPA in all 8 Semesters:
+  Sem 1: 9.40  Sem 2: -  Sem 3: -  Sem 4: -
+  Sem 5: -  Sem 6: -  Sem 7: -  Sem 8: -
+Calculated CGPA: 9.40
+------------------------------------------------------------
+
+============================================================
+    STUDENT RECORD & RESULT MANAGEMENT SYSTEM
+============================================================
+1. Add Student Record
+2. Search Student Record
+3. Calculate CGPA of Each Student
+4. Calculate Average CGPA of Each Year
+5. Display All Students
+6. Delete Student Record
+7. Display Students Sorted by SAP ID
+8. Display Students Sorted by Name
+9. AI-Assisted Academic Advisor
+10. Exit
+============================================================
+Enter your choice (1-10): 
+Exiting program. Thank you!

@@ -40,30 +40,6 @@ void calculateStudentCGPA(int index) {
     }
 }
 
-// Function to print details of a single student
-void printStudentDetails(int i) {
-    int j;
-    printf("\n------------------------------------------------------------\n");
-    printf("SAP ID       : %lld\n", students[i].sap_id);
-    printf("Roll Number  : %s\n", students[i].roll_no);
-    printf("Name         : %s\n", students[i].name);
-    printf("Phone Number : %s\n", students[i].phone);
-    printf("Email ID     : %s\n", students[i].email);
-    printf("Year         : %d\n", students[i].year);
-    printf("Semester     : %d\n", students[i].semester);
-    printf("SGPA in all 8 Semesters:\n");
-    for (j = 0; j < 8; j++) {
-        if (j < students[i].semester) {
-            printf("  Sem %d: %.2f", j + 1, students[i].sgpa[j]);
-        } else {
-            printf("  Sem %d: -", j + 1);
-        }
-        if (j == 3 || j == 7) printf("\n");
-    }
-    printf("Calculated CGPA: %.2f\n", students[i].cgpa);
-    printf("------------------------------------------------------------\n");
-}
-
 // Function to load 5 initial student records
 void loadInitialStudents() {
     int i;
@@ -144,6 +120,30 @@ void loadInitialStudents() {
     calculateStudentCGPA(4);
 
     totalStudents = 5;
+}
+
+// Function to print details of a single student
+void printStudentDetails(int i) {
+    int j;
+    printf("\n------------------------------------------------------------\n");
+    printf("SAP ID       : %lld\n", students[i].sap_id);
+    printf("Roll Number  : %s\n", students[i].roll_no);
+    printf("Name         : %s\n", students[i].name);
+    printf("Phone Number : %s\n", students[i].phone);
+    printf("Email ID     : %s\n", students[i].email);
+    printf("Year         : %d\n", students[i].year);
+    printf("Semester     : %d\n", students[i].semester);
+    printf("SGPA in all 8 Semesters:\n");
+    for (j = 0; j < 8; j++) {
+        if (j < students[i].semester) {
+            printf("  Sem %d: %.2f", j + 1, students[i].sgpa[j]);
+        } else {
+            printf("  Sem %d: -", j + 1);
+        }
+        if (j == 3 || j == 7) printf("\n");
+    }
+    printf("Calculated CGPA: %.2f\n", students[i].cgpa);
+    printf("------------------------------------------------------------\n");
 }
 
 // (a) Function to add student details
@@ -378,8 +378,52 @@ void sortByName() {
     }
 }
 
+// Part B: Simple AI-Assisted Academic Advisor (Decision-making using if-else)
+void academicAdvisor() {
+    long long id;
+    int i, found = -1;
+
+    printf("\n--- AI-ASSISTED ACADEMIC ADVISOR ---\n");
+    printf("Enter SAP ID of student: ");
+    scanf("%lld", &id);
+
+    for (i = 0; i < totalStudents; i++) {
+        if (students[i].sap_id == id) {
+            found = i;
+            break;
+        }
+    }
+
+    if (found == -1) {
+        printf("Student not found!\n");
+        return;
+    }
+
+    calculateStudentCGPA(found);
+    printf("\nStudent: %s | SAP ID: %lld | CGPA: %.2f\n", 
+           students[found].name, students[found].sap_id, students[found].cgpa);
+
+    // Simple if-else decision making suggested by AI
+    if (students[found].cgpa >= 9.0) {
+        printf("Category: Excellent Performance\n");
+        printf("Advice  : Outstanding result! Maintain your current study pattern and explore research or internships.\n");
+    } else if (students[found].cgpa >= 7.5) {
+        printf("Category: Good Performance\n");
+        printf("Advice  : Good work! Stay consistent and focus on higher grades in core subjects to achieve 9+ CGPA.\n");
+    } else if (students[found].cgpa >= 5.5) {
+        printf("Category: Needs Improvement\n");
+        printf("Advice  : Needs improvement - focus more on subjects with lower SGPA and attend doubt sessions.\n");
+    } else {
+        printf("Category: Requires Immediate Attention\n");
+        printf("Advice  : Requires immediate attention - consult your faculty mentor and join remedial classes.\n");
+    }
+}
+
+// Main function - Menu driven program
 int main() {
     int choice;
+
+    // Load initial 5 records so at least 5 records are always available
     loadInitialStudents();
 
     do {
@@ -425,11 +469,14 @@ int main() {
             case 8:
                 sortByName();
                 break;
+            case 9:
+                academicAdvisor();
+                break;
             case 10:
                 printf("\nExiting program. Thank you!\n");
                 break;
             default:
-                printf("\nOption not implemented yet or invalid!\n");
+                printf("\nInvalid choice! Please enter between 1 and 10.\n");
         }
     } while (choice != 10);
 
