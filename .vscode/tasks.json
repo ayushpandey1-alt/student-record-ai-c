@@ -7,9 +7,9 @@
             "command": "gcc",
             "args": [
                 "-g",
-                "student_record.c",
+                "${file}",
                 "-o",
-                "student_record.exe"
+                "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
@@ -21,7 +21,26 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "detail": "Compiler: gcc"
+            "detail": "Compiler: gcc active file"
+        },
+        {
+            "type": "shell",
+            "label": "Build 590034104.c",
+            "command": "gcc",
+            "args": [
+                "-g",
+                "590034104.c",
+                "-o",
+                "590034104.exe"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build",
+            "detail": "Compile 590034104.c"
         }
     ]
 }

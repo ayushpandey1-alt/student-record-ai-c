@@ -1,18 +1,17 @@
 /*
- * Project: AI-Assisted Student Record and Result Management System (Dynamic Memory Version)
- * Course: Programming in C (PRC1001) - UPES
- * Features:
- *   - Uses <stdlib.h> for dynamic memory allocation (calloc, malloc, free)
- *   - calloc(): Used to allocate and zero-initialize the dynamic student database
- *   - malloc(): Used to allocate temporary memory during sorting and student creation
- *   - free(): Used to release allocated heap memory and avoid memory leaks
+ * ============================================================================
+ * Project Title : AI-Assisted Student Record and Result Management System
+ * Course        : Programming in C (PRC1001)
+ * Program       : B. Tech CSE (Semester I)
+ * Institution   : University of Petroleum and Energy Studies (UPES)
+ * Student SAP ID: 590034104
+ * ============================================================================
  */
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
-#define TOTAL_SEMESTERS 8
+#define MAX 100
 
 // Structure to hold all details of a student
 struct Student {
@@ -21,16 +20,15 @@ struct Student {
     char name[50];
     char phone[15];
     char email[50];
-    int year;                    // 1, 2, 3, or 4
-    int semester;                // 1 to 8
-    float sgpa[TOTAL_SEMESTERS]; // SGPAs for 8 semesters
-    float cgpa;                  // Calculated CGPA
+    int year;          // 1, 2, 3, or 4
+    int semester;      // 1 to 8
+    float sgpa[8];     // SGPA for 8 semesters
+    float cgpa;        // Calculated CGPA
 };
 
-// Pointer to dynamically allocated student array on the heap
-struct Student *students = NULL;
+// Global array of students and count of current students
+struct Student students[MAX];
 int totalStudents = 0;
-int currentCapacity = 0;
 
 // Function to calculate CGPA for a student (average of valid SGPAs)
 void calculateStudentCGPA(int index) {
@@ -40,7 +38,7 @@ void calculateStudentCGPA(int index) {
 
     for (i = 0; i < students[index].semester; i++) {
         if (students[index].sgpa[i] > 0.0) {
-            sum += students[index].sgpa[i];
+            sum = sum + students[index].sgpa[i];
             count++;
         }
     }
@@ -49,68 +47,6 @@ void calculateStudentCGPA(int index) {
         students[index].cgpa = sum / count;
     } else {
         students[index].cgpa = 0.0;
-    }
-}
-
-// Function to print details of a single student
-void printStudentDetails(int i) {
-    int j;
-    printf("\n------------------------------------------------------------\n");
-    printf("SAP ID       : %lld\n", students[i].sap_id);
-    printf("Roll Number  : %s\n", students[i].roll_no);
-    printf("Name         : %s\n", students[i].name);
-    printf("Phone Number : %s\n", students[i].phone);
-    printf("Email ID     : %s\n", students[i].email);
-    printf("Year         : %d\n", students[i].year);
-    printf("Semester     : %d\n", students[i].semester);
-    printf("SGPA in all 8 Semesters:\n");
-    for (j = 0; j < TOTAL_SEMESTERS; j++) {
-        if (j < students[i].semester) {
-            printf("  Sem %d: %.2f", j + 1, students[i].sgpa[j]);
-        } else {
-            printf("  Sem %d: -", j + 1);
-        }
-        if (j == 3 || j == 7) printf("\n");
-    }
-    printf("Calculated CGPA: %.2f\n", students[i].cgpa);
-    printf("------------------------------------------------------------\n");
-}
-
-// Function to initialize dynamic memory using calloc()
-// calloc initializes all allocated bytes to zero
-void initDatabase(int initialCapacity) {
-    currentCapacity = initialCapacity;
-    students = (struct Student *) calloc(currentCapacity, sizeof(struct Student));
-
-    if (students == NULL) {
-        printf("Fatal Error: Memory allocation using calloc() failed!\n");
-        exit(1);
-    }
-}
-
-// Function to expand database capacity if needed using malloc() & free()
-void expandCapacityIfNeeded() {
-    if (totalStudents >= currentCapacity) {
-        int newCapacity = currentCapacity * 2;
-        // Allocate larger block using malloc()
-        struct Student *newBlock = (struct Student *) malloc(newCapacity * sizeof(struct Student));
-
-        if (newBlock == NULL) {
-            printf("Fatal Error: Memory allocation using malloc() failed!\n");
-            return;
-        }
-
-        // Copy existing data to the new memory block
-        for (int i = 0; i < totalStudents; i++) {
-            newBlock[i] = students[i];
-        }
-
-        // Free the old memory block
-        free(students);
-
-        students = newBlock;
-        currentCapacity = newCapacity;
-        printf("\n[System]: Database capacity dynamically increased to %d records.\n", currentCapacity);
     }
 }
 
@@ -196,61 +132,74 @@ void loadInitialStudents() {
     totalStudents = 5;
 }
 
+// Function to print details of a single student
+void printStudentDetails(int i) {
+    int j;
+    printf("\n------------------------------------------------------------\n");
+    printf("SAP ID       : %lld\n", students[i].sap_id);
+    printf("Roll Number  : %s\n", students[i].roll_no);
+    printf("Name         : %s\n", students[i].name);
+    printf("Phone Number : %s\n", students[i].phone);
+    printf("Email ID     : %s\n", students[i].email);
+    printf("Year         : %d\n", students[i].year);
+    printf("Semester     : %d\n", students[i].semester);
+    printf("SGPA in all 8 Semesters:\n");
+    for (j = 0; j < 8; j++) {
+        if (j < students[i].semester) {
+            printf("  Sem %d: %.2f", j + 1, students[i].sgpa[j]);
+        } else {
+            printf("  Sem %d: -", j + 1);
+        }
+        if (j == 3 || j == 7) printf("\n");
+    }
+    printf("Calculated CGPA: %.2f\n", students[i].cgpa);
+    printf("------------------------------------------------------------\n");
+}
+
 // (a) Function to add student details
 void addStudent() {
     int i;
-    expandCapacityIfNeeded();
-
-    // Allocate a temporary student structure on heap using malloc
-    struct Student *tempStudent = (struct Student *) malloc(sizeof(struct Student));
-    if (tempStudent == NULL) {
-        printf("Memory allocation failed for new student!\n");
+    if (totalStudents >= MAX) {
+        printf("\nStudent list is full!\n");
         return;
     }
 
-    printf("\n--- ADD NEW STUDENT (DYNAMIC) ---\n");
+    printf("\n--- ADD NEW STUDENT ---\n");
     printf("Enter SAP ID (9 digits): ");
-    scanf("%lld", &tempStudent->sap_id);
+    scanf("%lld", &students[totalStudents].sap_id);
 
     printf("Enter Roll Number: ");
-    scanf("%s", tempStudent->roll_no);
+    scanf("%s", students[totalStudents].roll_no);
 
     printf("Enter Name (Use underscore or single line): ");
-    scanf(" %[^\n]", tempStudent->name);
+    scanf(" %[^\n]", students[totalStudents].name);
 
     printf("Enter Phone Number: ");
-    scanf("%s", tempStudent->phone);
+    scanf("%s", students[totalStudents].phone);
 
     printf("Enter Email ID: ");
-    scanf("%s", tempStudent->email);
+    scanf("%s", students[totalStudents].email);
 
     printf("Enter Year (1, 2, 3, or 4): ");
-    scanf("%d", &tempStudent->year);
+    scanf("%d", &students[totalStudents].year);
 
     printf("Enter Semester (1 to 8): ");
-    scanf("%d", &tempStudent->semester);
+    scanf("%d", &students[totalStudents].semester);
 
-    printf("Enter SGPA for completed semesters (1 to %d):\n", tempStudent->semester);
-    for (i = 0; i < TOTAL_SEMESTERS; i++) {
-        if (i < tempStudent->semester) {
+    printf("Enter SGPA for completed semesters (1 to %d):\n", students[totalStudents].semester);
+    for (i = 0; i < 8; i++) {
+        if (i < students[totalStudents].semester) {
             printf("SGPA for Semester %d: ", i + 1);
-            scanf("%f", &tempStudent->sgpa[i]);
+            scanf("%f", &students[totalStudents].sgpa[i]);
         } else {
-            tempStudent->sgpa[i] = 0.0;
+            students[totalStudents].sgpa[i] = 0.0;
         }
     }
 
-    tempStudent->cgpa = 0.0;
-
-    // Copy from temporary heap object to dynamic array
-    students[totalStudents] = *tempStudent;
     calculateStudentCGPA(totalStudents);
     totalStudents++;
 
-    // Free temporary memory allocated with malloc()
-    free(tempStudent);
-
-    printf("\nStudent record added successfully! (Total: %d, Capacity: %d)\n", totalStudents, currentCapacity);
+    printf("\nStudent record added successfully!\n");
 }
 
 // (b) Function to search and display student record
@@ -317,12 +266,13 @@ void averageCGPAYearWise() {
     float sum[5] = {0.0, 0.0, 0.0, 0.0, 0.0};
     int count[5] = {0, 0, 0, 0, 0};
 
+    // Make sure all CGPAs are updated
     for (i = 0; i < totalStudents; i++) {
         calculateStudentCGPA(i);
         yr = students[i].year;
         if (yr >= 1 && yr <= 4) {
-            sum[yr] += students[i].cgpa;
-            count[yr] += 1;
+            sum[yr] = sum[yr] + students[i].cgpa;
+            count[yr] = count[yr] + 1;
         }
     }
 
@@ -339,7 +289,7 @@ void averageCGPAYearWise() {
 // (e) Function to display all students of the University
 void displayAllStudents() {
     int i;
-    printf("\n--- ALL UNIVERSITY STUDENTS (Total: %d, Capacity: %d) ---\n", totalStudents, currentCapacity);
+    printf("\n--- ALL UNIVERSITY STUDENTS (Total: %d) ---\n", totalStudents);
     if (totalStudents == 0) {
         printf("No records found.\n");
         return;
@@ -380,30 +330,21 @@ void deleteStudent() {
     printf("Student record deleted successfully!\n");
 }
 
-// (g) Function to display records in increasing order of SAP ID (uses malloc & free)
+// (g) Function to display records in increasing order of SAP ID
 void sortBySAPID() {
-    if (totalStudents == 0) {
-        printf("No student records available.\n");
-        return;
-    }
-
-    // Dynamically allocate memory for temporary array using malloc()
-    struct Student *temp = (struct Student *) malloc(totalStudents * sizeof(struct Student));
-    if (temp == NULL) {
-        printf("Memory allocation failed during sort!\n");
-        return;
-    }
-
+    struct Student temp[MAX];
+    struct Student swap;
     int i, j;
+
     for (i = 0; i < totalStudents; i++) {
         temp[i] = students[i];
     }
 
-    // Bubble Sort
+    // Simple Bubble Sort
     for (i = 0; i < totalStudents - 1; i++) {
         for (j = 0; j < totalStudents - i - 1; j++) {
             if (temp[j].sap_id > temp[j + 1].sap_id) {
-                struct Student swap = temp[j];
+                swap = temp[j];
                 temp[j] = temp[j + 1];
                 temp[j + 1] = swap;
             }
@@ -416,35 +357,23 @@ void sortBySAPID() {
     for (i = 0; i < totalStudents; i++) {
         printf("%-12lld %-20s %-6d %-6.2f\n", temp[i].sap_id, temp[i].name, temp[i].year, temp[i].cgpa);
     }
-
-    // Free the dynamically allocated temporary array
-    free(temp);
 }
 
-// (h) Function to display records in increasing order of Name (uses malloc & free)
+// (h) Function to display records in increasing order of Name
 void sortByName() {
-    if (totalStudents == 0) {
-        printf("No student records available.\n");
-        return;
-    }
-
-    // Dynamically allocate memory for temporary array using malloc()
-    struct Student *temp = (struct Student *) malloc(totalStudents * sizeof(struct Student));
-    if (temp == NULL) {
-        printf("Memory allocation failed during sort!\n");
-        return;
-    }
-
+    struct Student temp[MAX];
+    struct Student swap;
     int i, j;
+
     for (i = 0; i < totalStudents; i++) {
         temp[i] = students[i];
     }
 
-    // Bubble Sort with strcmp
+    // Simple Bubble Sort using strcmp
     for (i = 0; i < totalStudents - 1; i++) {
         for (j = 0; j < totalStudents - i - 1; j++) {
             if (strcmp(temp[j].name, temp[j + 1].name) > 0) {
-                struct Student swap = temp[j];
+                swap = temp[j];
                 temp[j] = temp[j + 1];
                 temp[j + 1] = swap;
             }
@@ -457,12 +386,9 @@ void sortByName() {
     for (i = 0; i < totalStudents; i++) {
         printf("%-20s %-12lld %-6d %-6.2f\n", temp[i].name, temp[i].sap_id, temp[i].year, temp[i].cgpa);
     }
-
-    // Free the dynamically allocated temporary array
-    free(temp);
 }
 
-// Part B: Simple AI-Assisted Academic Advisor
+// Part B: Simple AI-Assisted Academic Advisor (Decision-making using if-else)
 void academicAdvisor() {
     long long id;
     int i, found = -1;
@@ -487,6 +413,7 @@ void academicAdvisor() {
     printf("\nStudent: %s | SAP ID: %lld | CGPA: %.2f\n", 
            students[found].name, students[found].sap_id, students[found].cgpa);
 
+    // Simple if-else decision making suggested by AI
     if (students[found].cgpa >= 9.0) {
         printf("Category: Excellent Performance\n");
         printf("Advice  : Outstanding result! Maintain your current study pattern and explore research or internships.\n");
@@ -502,27 +429,16 @@ void academicAdvisor() {
     }
 }
 
-// Function to clean up all dynamically allocated memory before program exit
-void freeAllMemory() {
-    if (students != NULL) {
-        free(students);
-        students = NULL;
-    }
-}
-
-// Main function
+// Main function - Menu driven program
 int main() {
     int choice;
 
-    // Allocate initial memory for 10 students using calloc()
-    initDatabase(10);
-
-    // Preload initial 5 students
+    // Load initial 5 records so at least 5 records are always available
     loadInitialStudents();
 
     do {
         printf("\n============================================================\n");
-        printf("  STUDENT RECORD & RESULT MANAGEMENT (DYNAMIC MEMORY)\n");
+        printf("    STUDENT RECORD & RESULT MANAGEMENT SYSTEM\n");
         printf("============================================================\n");
         printf("1. Add Student Record\n");
         printf("2. Search Student Record\n");
@@ -567,9 +483,7 @@ int main() {
                 academicAdvisor();
                 break;
             case 10:
-                printf("\nFreeing allocated dynamic memory and exiting...\n");
-                freeAllMemory();
-                printf("Exiting program. Thank you!\n");
+                printf("\nExiting program. Thank you!\n");
                 break;
             default:
                 printf("\nInvalid choice! Please enter between 1 and 10.\n");
