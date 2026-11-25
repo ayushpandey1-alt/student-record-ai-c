@@ -3,7 +3,6 @@
  * Project Title : AI-Assisted Student Record and Result Management System
  * Course        : Programming in C (PRC1001)
  * Program       : B. Tech CSE (Semester I)
- * Institution   : University of Petroleum and Energy Studies (UPES)
  * Student SAP ID: 590034104
  * ============================================================================
  */
